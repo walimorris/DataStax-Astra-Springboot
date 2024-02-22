@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/loggers.css}">
+
+    <title>Logger Search</title>
+</head>
+
+<body style="background-color: #e4ebf7">
+<div id="root">
+    <div style="text-align: center;">
+        <h1>Welcome to Logger Trace Search</h1>
+    </div>
+    <div style="display: flex; width: 100%; height: 100px;">
+        <div style="margin: 8px 8px 8px 350px;height: inherit; width: 50%;">
+            <form action="#" th:action="@{/}" th:object="${keyspacesLogger}" method="get">
+                <p>Module Search: <input type="text" th:field="*{module}"></p>
+                <p>Optional Date: &nbsp;&nbsp;<input type="text" th:field="*{createdAt}"></p>
+                <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"></p>
+            </form>
+        </div>
+        <div style="margin: 8px; height: inherit; width: 50%;">
+            <form action="#" th:action="@{/add}" th:object="${keyspacesLogger}" method="post">
+                <p>Module Add: <input type="text" th:field="*{module}"></p>
+                <p>   Message: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" th:field="*{message}"></p>
+                <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"></p>
+            </form>
+        </div>
+    </div>
+    <div style="padding-top: 150px; margin-left: 50px; text-align: center;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <th class="primary">Module</th>
+                <th class="primary">Log ID</th>
+                <th class="primary">Message</th>
+                <th class="primary">Date</th>
+            </tr>
+            <tr th:if="${#lists.isEmpty(foundLoggers)}">
+                <td colspan="5">No Logs found.</td>
+            </tr>
+            <tr th:each="loggers : ${foundLoggers}">
+                <td><span th:text="${loggers.module}">Logger Module</span></td>
+                <td><span th:text="${loggers.logId}">Logger ID</span></td>
+                <td><span th:text="${loggers.message}">Logger Message</span></td>
+                <td><span th:text="${loggers.createdAt}">Logger Date</span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
